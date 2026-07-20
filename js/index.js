@@ -1,7 +1,7 @@
 import { fetchGitHubUser, fetchGitHubUserRepos } from './api.js';
 import { inputSearch, btnSearch, profileResults, renderProfile, showLoading, showAlert } from './ui.js';
 
-btnSearch.addEventListener('click', async () => {
+const searchUser = async () => {
   const userName = inputSearch.value.trim();
 
   if (!userName) {
@@ -24,5 +24,16 @@ btnSearch.addEventListener('click', async () => {
     console.error('Erro ao buscar o perfil do usuário:', error);
     showAlert(error.message || 'Ocorreu um erro ao buscar o perfil do usuário.');
     profileResults.innerHTML = '';
+  }
+};
+
+btnSearch.addEventListener('click', () => {
+  searchUser();
+});
+
+inputSearch.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    searchUser();
   }
 });
